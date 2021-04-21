@@ -1,0 +1,43 @@
+{
+  "devDependencies": {
+    "@chainlink/contracts": "^0.1.7",
+    "@openzeppelin/contracts": "3.3.0",
+    "@openzeppelin/test-helpers": "0.5.4",
+    "@truffle/hdwallet-provider": "1.2.6",
+    "ansi-colors": "^4.1.1",
+    "babel-polyfill": "6.26.0",
+    "babel-preset-env": "1.7.0",
+    "babel-preset-es2015": "6.24.1",
+    "babel-preset-stage-2": "6.24.1",
+    "babel-preset-stage-3": "6.24.1",
+    "babel-register": "6.26.0",
+    "bootstrap": "4.6.0",
+    "chai": "^4.3.4",
+    "chai-bn": "^0.2.1",
+    "dotenv": "8.2.0",
+    "lodash.flatten": "^4.4.0",
+    "react": "^16.13.1",
+    "react-bootstrap": "^1.3.0",
+    "react-dom": "^16.13.1",
+    "react-scripts": "^3.4.3",
+    "truffle": "5.1.39",
+    "web3": "^1.3.0"
+  },
+  "dependencies": {
+    "@chainlink/contracts": "^0.1.7"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build"
+  },
+  "browserslist": [
+    ">0.2%",
+    "not dead",
+    "not ie <= 11",
+    "not op_mini all"
+  ]
+}
