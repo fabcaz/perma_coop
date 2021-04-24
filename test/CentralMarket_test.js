@@ -1,7 +1,9 @@
 const CentralMarket = artifacts.require("./CentralMarket.sol");
 const Crop = artifacts.require("./Crop.sol");
 const {BN, constants, expectEvent, expectRevert} = require('@openzeppelin/test-helpers');
-const { assert } = require('chai');
+const { assert, util } = require('chai');
+require('dotenv').config()
+const node_util = require('util')
 
 contract('CentralRegisty', ([member1, member2]) => {
     let centralMark, crop_contract;
@@ -9,10 +11,10 @@ contract('CentralRegisty', ([member1, member2]) => {
     let fake_address1 = "0x7ff3ABE1D5eAE33030eb4371bdd492a8dc5F1a76"
 
     beforeEach(async function(){
-        centralMark = await CentralMarket.new();
+        centralMark = await CentralMarket.new(); // contracts will not contain sample data from migrations/sample_product_data.csv
         crop_contract = await Crop.new();
         
-        console.log("&&&&&& BEFORE start &&&&&\n\n"+centralMark.Crop);
+        console.log("&&&&&& BEFORE start &&&&&\n\n");
         //console.log(centralReg);
         console.log("&&&&&& BEFORE done &&&&&&");
     });    
@@ -105,6 +107,8 @@ contract('CentralRegisty', ([member1, member2]) => {
         assert.equal(manifest[1].length, 3);
         assert.equal(manifest[2].length, 3);
     });
+
+
 
 
 });

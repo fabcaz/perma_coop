@@ -3,16 +3,10 @@ import React, { Component } from 'react'
 import {Table} from 'react-bootstrap'
 
 import Web3 from 'web3'
+import InventoryRow from './InventoryRow.js'
 
 
 class InventoryTable extends Component{
-
-    // constructor(props){
-    //     super(props);
-  
-
-    //     this.createRows = this.createRows.bind(this);
-    //   }
 
     createRows(){
         console.log("@@@ createRows start @@@");
@@ -24,36 +18,28 @@ class InventoryTable extends Component{
         let qtyArr = this.props.marketInventory[2];
         let res = []
 
-        // try{
-        //     console.log("nameArr: "+nameArr)
-        //     console.log("nameArr Length: "+nameArr.length)
-        //     console.log("priceArr: "+priceArr)
-        //     console.log("priceArr Length: "+priceArr.length)
-        //     console.log("qtyArr: "+qtyArr)
-        //     console.log("qtyArr Length: "+qtyArr.length)
-        // }catch(e){
-        //     console.log("THE ERROR: "+e);
-        //     return
-        // }
-
         try{
 
         
-        assert(nameArr.length === priceArr.length && priceArr.length === qtyArr.length && qtyArr.length === nameArr.length, "Arrays have differnt lengths");
+        assert(nameArr.length === priceArr.length
+            && priceArr.length === qtyArr.length
+            && qtyArr.length === nameArr.length,
+             "Arrays have differnt lengths");
         }catch(e){
             console.log("THE ERROR: "+e);
             console.log("@@@ createRows end @@@");
             return
         }
-        //using idx as key because order should not change
+        //using idx as key because order should not change after being loaded from contract
         for(let i = 0 ; i < nameArr.length; i++){
             console.log("curr row is: "+ i)
             res.push(
-                <tr key={i}>
-                    <td>{web3.utils.hexToAscii(nameArr[i])}</td>
-                    <td>{priceArr[i]}</td>
-                    <td>{qtyArr[i]}</td>
-                </tr>
+                <InventoryRow
+                    idx   = {i}
+                    name  = {web3.utils.hexToAscii(nameArr[i])}
+                    price = {priceArr[i]}
+                    qty   = {qtyArr[i]}
+                />
             )
         }
 

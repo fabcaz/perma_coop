@@ -1,8 +1,8 @@
  pragma solidity >=0.6.0 <0.8.0;
 
-import "./services/PriceApiGETservice.sol";
+//import "./services/PriceApiGETservice.sol";
 //import "./CentralReserve.sol"
-import "./enums/Crop.sol";
+//import "./enums/Crop.sol";
 
 // contracts/CentralReserve.sol
 // contracts/services/PriceApiGETservice.sol
@@ -16,10 +16,10 @@ contract CentralMarket{
     3. CentralReserve to handle tx between market an members
      */
 
-    PriceApiGETservice private priceApiGETservice;
+    //PriceApiGETservice private priceApiGETservice;
     //CentralReserve private centralReserve;
 
-    //uint(Crop.crop_type.XXX) => qty of prduce in what ever unit
+
     bytes32[] private crop_names;
     mapping(bytes32 => ProductInfo) private crop_price_and_qty;
 
@@ -29,16 +29,11 @@ contract CentralMarket{
       uint256 keys_array_idx;
     }
 
-/*
-enum in mapping work around:
-  enum TestEnum { ONE, TWO, THREE }
-    mapping (uint => uint) testMapping;
+ function getCropCount() public view returns(uint256) {
+   return crop_names.length;
+ }
 
-    function getValueOne() constant returns(uint) {
-        return testMapping[uint(TestEnum.ONE)];
-    }
 
- */
 event AddingName(bytes32 name);
 //use access control to restrict access
 function addCropEntry(bytes32 _name, uint256 _price, uint256 _qty) public{
@@ -79,7 +74,7 @@ function getInventoryManifest() public  returns(bytes32[] memory, uint256[] memo
     curr_name = crop_names[i];
     
     names[i]      = curr_name;
-    prices[i]     = crop_price_and_qty[curr_name].qty;
+    prices[i]     = crop_price_and_qty[curr_name].price;
     quantities[i] = crop_price_and_qty[curr_name].qty;
   }
   emit Step("after for loop");
@@ -112,9 +107,6 @@ function cropExists(bytes32 _name) public view returns(bool){
   
 }
 
-//  function getCropEnumValue(uint256 _number) public pure returns(Crop.crop_types){
-//    return Crop.crop_types(_number);
-//  }
 
 //should be frontend
 function put_in_cart() public{

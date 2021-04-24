@@ -1,10 +1,10 @@
 require('dotenv').config()
 
 const HDWalletProvider = require('@truffle/hdwallet-provider');
-const infuraKey = "fj4jll3k.....";
+
 
 const mnemonic = process.env.MNEMONIC
-const url = process.env.INFURA_KOVAN_URL + INFURA_PROJ_ID;
+const url = process.env.INFURA_KOVAN_URL + process.env.INFURA_PROJ_ID;
 
 module.exports = {
   contracts_directory: './src/contracts/',

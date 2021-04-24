@@ -46,13 +46,23 @@ class App extends Component {
           const centralMarket = new web3.eth.Contract(CentralMarket.abi, networkData.address);
           this.setState({centralMarket});
           
-          //this.setState({marketInventory: getInventoryManifest()})
           console.log("GGGGGGGGGGg 2")
-          this.setState({marketInventory: [
-            ['0x706f7461746f0000000000000000000000000000000000000000000000000000', '0x746f6d61746f0000000000000000000000000000000000000000000000000000', '0x7261646973680000000000000000000000000000000000000000000000000000'],
-            [5, 6, 7],
-            [1000, 2000, 3000]
-          ]})
+
+          /**
+           * MUST CREATE PRODUCTS TROUGH TRUFFLE CONSOLE
+           */
+
+          let fetchedManifest = this.getInventoryManifest_as_2d_array();
+          //console.log("fetchedManifest: "+ util.inspect(fetchedManifest)+"\nJJJ");
+
+          // this.setState({
+          //   marketInventory: fetchedManifest
+          // })
+          // this.setState({marketInventory: [
+          //   ['0x706f7461746f0000000000000000000000000000000000000000000000000000', '0x746f6d61746f0000000000000000000000000000000000000000000000000000', '0x7261646973680000000000000000000000000000000000000000000000000000'],
+          //   [5, 6, 7],
+          //   [1000, 2000, 3000]
+          // ]})
           console.log("GGGGGGGGGGg4")
           console.log("\n\n\n\n");
           console.log("L73 this.state.marketInventory: "+util.inspect(this.state.marketInventory));
@@ -89,6 +99,7 @@ class App extends Component {
         };
 
         this.createProductLiteral = this.createProductLiteral.bind(this);
+        this.getInventoryManifest_as_2d_array = this.getInventoryManifest_as_2d_array.bind(this);
       }
 
       async getInventoryManifest(){
@@ -164,7 +175,7 @@ class App extends Component {
           return(
             <div>
               <Navigbar account={this.state.account}/>
-              { <InventoryTable header={['name', 'price', 'quantity']}
+              { <InventoryTable header={['name', 'price', 'quantity', 'lasfd']}
                 marketInventory={this.state.marketInventory} /> }
             </div>
           )
