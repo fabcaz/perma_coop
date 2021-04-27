@@ -9,10 +9,10 @@ import InventoryRow from './InventoryRow.js'
 class InventoryTable extends Component{
 
     createRows(){
-        console.log("@@@ createRows start @@@");
+        //console.log("@@@ createRows start @@@");
         const util = require('util')
         const web3 = window.web3;
-        console.log("this.props.marketInventory: "+ util.inspect(this.props))
+        //console.log("this.props.marketInventory: "+ util.inspect(this.props))
         let nameArr = this.props.marketInventory[0];
         let priceArr = this.props.marketInventory[1];
         let qtyArr = this.props.marketInventory[2];
@@ -27,23 +27,26 @@ class InventoryTable extends Component{
              "Arrays have differnt lengths");
         }catch(e){
             console.log("THE ERROR: "+e);
-            console.log("@@@ createRows end @@@");
+            //console.log("@@@ createRows end @@@");
             return
         }
         //using idx as key because order should not change after being loaded from contract
         for(let i = 0 ; i < nameArr.length; i++){
-            console.log("curr row is: "+ i)
+            //console.log("ROW :: qty -> "+ i +" :: "+qtyArr[i])
+            
             res.push(
                 <InventoryRow
+                    key   = {i}
                     idx   = {i}
                     name  = {web3.utils.hexToAscii(nameArr[i])}
                     price = {priceArr[i]}
                     qty   = {qtyArr[i]}
+                    updateCartEntry_func={this.props.updateCartEntry_func}
                 />
             )
         }
 
-        console.log("@@@ createRows end @@@");
+        //console.log("@@@ createRows end @@@");
         return res;
       }
 
