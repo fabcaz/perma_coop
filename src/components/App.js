@@ -1,14 +1,13 @@
 import React, { Component } from 'react'
 import Web3 from 'web3'
 //const {BN, constants, expectEvent, expectRevert} = require('@openzeppelin/test-helpers');
-
+import assert from 'assert';
 
 import CentralMarket from '../build/contracts/CentralMarket.json'
 
-
 import Navigbar from './Navigbar.js'
 import InventoryTable from './InventoryTable.js'
-import assert from 'assert';
+import CartDropdown from './CartDropdown.js'
 
 
 const util = require('util')
@@ -159,11 +158,12 @@ class App extends Component {
               };
       }
 
-      createCartEntryJSONObj(name, qty, subtotal){
+      createCartEntryJSONObj(prod_idx, name, qty, subtotal){
         return {
           //storing name here is redundant. If it does not make rendering 
           //Cart contents easier the `name` field should be disacarded in favor
           //of using getProductNamebyIdx() when rendering
+                prod_idx: prod_idx,
                 name: name,
                 qty: qty,
                 subtotal: subtotal
@@ -245,7 +245,7 @@ class App extends Component {
        * @returns array argument as an object literal
        */
       updateCartEntryQty(prod_idx, new_prod_qty_in_cart){
-        //reduce inventory on screen but not on chain
+        //reduce inventory on this.state but not on chain
         //add/change product qty in cart; change qty on shelf accordingly
         //(re)calculate current subtotal for product in question
         
@@ -284,7 +284,7 @@ class App extends Component {
           console.log("@@@ NO EXISTING ENTRY IN CART start @@@");
           let prod_name = this.getProductNameByIdx(prod_idx);
           //console.log("THE prod_name: "+ prod_name);
-          let new_cart_obj = this.createCartEntryJSONObj(prod_name, new_prod_qty_in_cart, new_subtotal);
+          let new_cart_obj = this.createCartEntryJSONObj(prod_idx, prod_name, new_prod_qty_in_cart, new_subtotal);
           //console.log("THE new_cart_obj: "+ util.inspect(new_cart_obj));
 
           this.updateCartEntry(prod_idx, new_cart_obj);
@@ -330,18 +330,24 @@ class App extends Component {
         // console.debug("accounts: "+this.state.account);
         console.debug("\n===RENDERING end===\n");
           
-
-        //also pass this.props.updateCartEntry to Cart popup (which should be passed to NavigBar)
-          return(
-            <React.Fragment>
-              <Navigbar account={this.state.account}/>
-              <InventoryTable
-                header={['name', 'price', 'quantity on shelf', 'quantity in cart']}
-                marketInventory={this.state.marketInventory}
-                updateCartEntry_func={this.updateCartEntryQty}
+        return(
+          <React.Fragment>
+            <Navigbar
+              account={this.state.account}
+              cartDropdown={
+                  < CartDropdown
+                    cart={this.state.cart}
+                    checkout_func={this.checkout}
+                  />
+                }
               />
-            </React.Fragment>
-          )
+            <InventoryTable
+              header={['name', 'price', 'quantity on shelf', 'quantity in cart']}
+              marketInventory={this.state.marketInventory}
+              updateCartEntry_func={this.updateCartEntryQty}
+            />
+          </React.Fragment>
+        )
       }
 }
 
