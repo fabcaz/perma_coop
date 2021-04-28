@@ -4,8 +4,9 @@ const { assert } = require('console');
 const fs = require('fs');
 const papa = require('papaparse');
 
-// const FoodToken = artifacts.require("./FoodToken.sol");
+const FoodToken = artifacts.require("./FoodToken.sol");
 const CentralMarket = artifacts.require("./CentralMarket.sol");
+const CentralReserve = artifacts.require("./CentralReserve.sol");
 
 
 const TOKEN_PRICE = process.env.TOKEN_PRICE;
@@ -27,11 +28,20 @@ module.exports = async function(deployer, network, accounts){
     console.log("\n\n\nCHECKING COUNT\tinventory_count: "+ inventory_count)
 
 
+
+
 }
 
 async function deployContracts(depppp, sampleDataFilePath, isTesting){
 
-    await depppp.deploy(CentralMarket);
+    await depppp.deploy(FoodToken, TOKEN_QTY);
+    const foodToken = await FoodToken.deployed();
+
+    await depppp.deploy(CentralReserve, foodToken.address);
+    const centralReserve = await CentralReserve.deployed();
+
+
+    await depppp.deploy(CentralMarket, centralReserve.address);
     const centralMarket = await CentralMarket.deployed();
 
     console.log("IS_TEST_PROFILE: "+ String(IS_TEST_PROFILE));
