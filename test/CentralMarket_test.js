@@ -1,22 +1,38 @@
+require('dotenv').config()
+
+const FoodToken = artifacts.require("./FoodToken.sol");
 const CentralMarket = artifacts.require("./CentralMarket.sol");
+const CentralReserve = artifacts.require("./CentralReserve.sol");
 const Crop = artifacts.require("./Crop.sol");
+
 const {BN, constants, expectEvent, expectRevert} = require('@openzeppelin/test-helpers');
 const { assert, util } = require('chai');
-require('dotenv').config()
 const node_util = require('util')
 
-contract('CentralRegisty', ([member1, member2]) => {
+contract('CentralMarket', ([member1, member2]) => {
     let centralMark, crop_contract;
     
     let fake_address1 = "0x7ff3ABE1D5eAE33030eb4371bdd492a8dc5F1a76"
 
+    // await depppp.deploy(FoodToken, TOKEN_QTY);
+    //const foodToken = await FoodToken.deployed();
+
+    // await depppp.deploy(CentralReserve, foodToken.address);
+
+    //console.log(node_util.inspect(centralMark));
+
     beforeEach(async function(){
-        centralMark = await CentralMarket.new(); // contracts will not contain sample data from migrations/sample_product_data.csv
+        const centralReserve = await CentralReserve.deployed();
+        //console.log(node_util.inspect(centralReserve));
+    
+        centralMark = await CentralMarket.new();
+        //centralMark = await CentralMarket.new(centralReserve.address); // contracts will not contain sample data from migrations/sample_product_data.centralReserve
+        //console.log(node_util.inspect(centralMark));
         crop_contract = await Crop.new();
-        
-        console.log("&&&&&& BEFORE start &&&&&\n\n");
+        console.log("&&&&&& BEFORE Market &&&&&\n\n");
+        //console.log("&&&&&& BEFORE start &&&&&\n\n");
         //console.log(centralReg);
-        console.log("&&&&&& BEFORE done &&&&&&");
+        //console.log("&&&&&& BEFORE done &&&&&&");
     });    
 
     it('#addCropEntry', async function(){
@@ -108,7 +124,21 @@ contract('CentralRegisty', ([member1, member2]) => {
         assert.equal(manifest[2].length, 3);
     });
 
+    // check for sufficient inv
+    // check for insufficient inv
+    it('#verifySufficientInventory', async function(){
 
+    });
+
+    // check for sufficient funds
+    // check for insufficient funds
+    it('#checkout', async function(){
+
+    });
+
+    it('#method', async function(){
+
+    });
 
 
 });
